@@ -79,7 +79,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextArea" name="jTextArea1">
+        <Component class="javax.swing.JTextArea" name="txtContent">
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
@@ -103,6 +103,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Ho&#xe0;n t&#x1ea5;t"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btSubmitMouseClicked"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

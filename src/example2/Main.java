@@ -11,9 +11,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JFrame;
+import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -27,13 +30,14 @@ public class Main extends javax.swing.JFrame {
     private PnShowEach pnShowEach;
     private PnCreateNew pnCreateNew;
     private PnUserInfo pnUserInfo;
+    private PnAnnouncement pnAnnouncement;
     String workingDir = System.getProperty("user.dir");
     File userInfo = new File(workingDir + "/temp/userInfo.txt");
     /**
      * Creates new form Main
      */
     public Main() throws IOException {
-        //
+      
         initComponents();
 
         //Khởi tạo các Panel của ứng dụng
@@ -53,12 +57,10 @@ public class Main extends javax.swing.JFrame {
                 int select = JOptionPane.showConfirmDialog(null, "Bạn thực sự muốn thoát ứng dụng?",
                 "Chú ý", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                 if(select == JOptionPane.YES_OPTION){
-                    try {
-                    FileWriter f2 = new FileWriter(userInfo, false);
-                        f2.write("");
-                        f2.close();
+                    try { 
+                        FileUtils.cleanDirectory(new File(workingDir + "/temp/"));
                     } catch (IOException ex) {
-                        ex.printStackTrace();
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     System.exit(0);
                 }else if(select == JOptionPane.NO_OPTION){
@@ -74,12 +76,14 @@ public class Main extends javax.swing.JFrame {
         pnShowEach = new PnShowEach();
         pnCreateNew = new PnCreateNew();
         pnUserInfo = new PnUserInfo();
+        pnAnnouncement = new PnAnnouncement();
         //Xác định navigation
         //Sau khi đăng nhập thành công sẽ chuyển sang giao diện của PnHome
         pnLogin.setPnLoginSuccess(pnHome);
         pnHome.setPnHomeIndex1(pnShowEach);
         pnHome.setPnHomeIndex2(pnCreateNew);
         pnHome.setPnHomeIndex3(pnUserInfo);
+        pnHome.setPnHomeIndex4(pnAnnouncement);
         pnUserInfo.PnBacktoMain(pnHome);
         pnShowEach.PnBacktoMain(pnHome);
         pnCreateNew.PnBacktoMain(pnHome);

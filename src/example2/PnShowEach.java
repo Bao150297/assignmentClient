@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -48,17 +47,18 @@ public class PnShowEach extends javax.swing.JPanel {
      * @throws java.io.IOException
      */
     String workingDir = System.getProperty("user.dir");
-    File info = new File(workingDir + "/temp/info.txt");
     public PnShowEach() throws IOException
     {  
         initComponents();
     }
     
     private String[] getInfo() throws FileNotFoundException, IOException{
+        File info = new File(workingDir + "/temp/info.txt");
         BufferedReader br = new BufferedReader(new FileReader(info));   
         String st = "";  
         st = br.readLine();
         String[] arr = st.split("/");
+        br.close();
         return arr;
     }
     
@@ -280,20 +280,15 @@ public class PnShowEach extends javax.swing.JPanel {
     private void btBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btBackMouseClicked
         JFrame parent = Utitilities.findJFrameOf(this);
         if (parent != null) {
-            try {
-                thumb.setIcon(null);
-                lbmaSV.setText("");
-                int i = 0;
-                for(; i < 10 ; i++){
-                    tbInfo.getModel().setValueAt("", i, 1);
-                }
-                FileWriter f2 = new FileWriter(info, false);
-                f2.write("");
-                f2.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }         
-                parent.setContentPane(pnMoreInfo);
+            thumb.setIcon(null);
+            lbmaSV.setText("");
+            btDelete.setEnabled(false);
+            btChange.setEnabled(false);
+            int i = 0;
+            for(; i < 10 ; i++){
+                tbInfo.getModel().setValueAt("", i, 1);
+            }
+            parent.setContentPane(pnMoreInfo);
                 parent.pack();
             } else {
                 JOptionPane.showMessageDialog(parent, "Panel Login only used for JFrame");

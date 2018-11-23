@@ -5,19 +5,92 @@
  */
 package example2;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 /**
  *
  * @author noobf
  */
 public class PnAnnouncement extends javax.swing.JPanel {
-
+    String workingDir = System.getProperty("user.dir");
+    File file;
     /**
      * Creates new form PnAnnouncement
      */
     public PnAnnouncement() {
         initComponents();
+        txtContent.setLineWrap(true);
+        txtContent.setWrapStyleWord(true);
     }
-
+    
+    private void saveContent() throws IOException{
+        if("".equals(txtTitle.getText()) || "".equals(txtContent.getText()) ){
+            JOptionPane.showMessageDialog(null, "Điền đầy đủ theo mẫu", "Lỗi!", JOptionPane.ERROR);
+            return;
+        }
+        String title = txtTitle.getText();
+        file = File.createTempFile(title, ".txt", new File(workingDir + "/temp"));
+        file.deleteOnExit();
+        FileWriter fw = new FileWriter(file, false);
+        fw.write(txtContent.getText());
+        fw.close();
+    }
+    
+    private String getInfo() throws FileNotFoundException, IOException{
+        File info = new File(workingDir + "/temp/userInfo.txt");
+        BufferedReader br = new BufferedReader(new FileReader(info));   
+        String st = "";  
+        st = br.readLine();
+        String[] arr = st.split("/");
+        br.close();
+        return arr[0];
+    }
+    
+    private void createAnnouncement() throws UnsupportedEncodingException, IOException{
+        StringBody id = new StringBody(getInfo());
+        String title = URLEncoder.encode(txtTitle.getText(), "UTF-8");
+        HttpClient httpclient =  new DefaultHttpClient();
+        HttpPost httppost = new HttpPost("http://localhost:3000/users/createAnnounce");
+        try{
+            FileBody bin = new FileBody(file);
+            MultipartEntity reqEntity = new MultipartEntity();
+            reqEntity.addPart("announce", bin);
+            reqEntity.addPart("title", new StringBody(title));
+            reqEntity.addPart("makerID", id);
+            httppost.setEntity(reqEntity);
+            System.out.println("Requesting : " + httppost.getRequestLine());
+            HttpResponse httpres = httpclient.execute(httppost);
+            int code = httpres.getStatusLine().getStatusCode();
+            if(code == 200){
+                JOptionPane.showMessageDialog(null, "Thêm dữ liệu thành công!",
+                        "Thành công", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }catch(ClientProtocolException e){
+            
+        }finally{
+            httpclient.getConnectionManager().shutdown();
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,7 +101,7 @@ public class PnAnnouncement extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtContent = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtTitle = new javax.swing.JTextField();
@@ -38,15 +111,20 @@ public class PnAnnouncement extends javax.swing.JPanel {
         setMaximumSize(new java.awt.Dimension(700, 600));
         setMinimumSize(new java.awt.Dimension(700, 600));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtContent.setColumns(20);
+        txtContent.setRows(5);
+        jScrollPane1.setViewportView(txtContent);
 
         jLabel1.setText("Nội dung thông báo");
 
         jLabel2.setText("Tiêu đề");
 
         btSubmit.setText("Hoàn tất");
+        btSubmit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btSubmitMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -85,13 +163,29 @@ public class PnAnnouncement extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btSubmitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSubmitMouseClicked
+        int option = JOptionPane.showConfirmDialog(null, "Xác nhận thêm tin thông báo?",
+                "Xác nhận" ,JOptionPane.YES_NO_OPTION);
+        if(option == JOptionPane.YES_OPTION){
+            try {
+                saveContent();
+                createAnnouncement();
+                // TODO add your handling code here:
+            } catch (IOException ex) {
+                Logger.getLogger(PnCreateNew.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            return;
+        }
+    }//GEN-LAST:event_btSubmitMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btSubmit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea txtContent;
     private javax.swing.JTextField txtTitle;
     // End of variables declaration//GEN-END:variables
 }

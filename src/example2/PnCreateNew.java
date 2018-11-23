@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
@@ -235,9 +236,9 @@ public class PnCreateNew extends javax.swing.JPanel {
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().
         getHomeDirectory());
         jfc.setDialogTitle("Chọn một file excel để lấy thông tin: ");
-	jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Only excel file", "xls", "xlsx");
-	jfc.addChoosableFileFilter(filter);
+        jfc.addChoosableFileFilter(filter);
 
         int returnValue = jfc.showOpenDialog(null);
         // int returnValue = jfc.showSaveDialog(null);
@@ -253,9 +254,9 @@ public class PnCreateNew extends javax.swing.JPanel {
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().
         getHomeDirectory());
         jfc.setDialogTitle("Chọn ảnh đại diện: ");
-	jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Only image file", "png", "jpg");
-	jfc.addChoosableFileFilter(filter);
+        jfc.addChoosableFileFilter(filter);
 
         int returnValue = jfc.showOpenDialog(null);
         // int returnValue = jfc.showSaveDialog(null);
@@ -305,10 +306,12 @@ public class PnCreateNew extends javax.swing.JPanel {
                     reqEntity.addPart(nameBody[i], arr[i]);
                 }               
                 httppost.setEntity(reqEntity);
-                System.out.println("Requesting : " + httppost.getRequestLine());
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                String responseBody = httpclient.execute(httppost, responseHandler);
-                System.out.println("responseBody : " + responseBody);
+                HttpResponse httpres = httpclient.execute(httppost);
+                int code = httpres.getStatusLine().getStatusCode();
+                if(code == 200){
+                    JOptionPane.showMessageDialog(null, "Thêm dữ liệu thành công!",
+                            "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                }
             } catch (ClientProtocolException e) {
             } finally {
                 httpclient.getConnectionManager().shutdown();
@@ -319,8 +322,7 @@ public class PnCreateNew extends javax.swing.JPanel {
        }else{
            JOptionPane.showMessageDialog(null, "Hãy lựa chọn một hình thức thêm mới thông tin sinh viên",
                    "Lỗi", JOptionPane.INFORMATION_MESSAGE);
-       }
-       
+       }      
  }
     private void btSubmitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSubmitMouseClicked
         int option = JOptionPane.showConfirmDialog(null, "Xác nhận thêm thông tin sinh viên?",
