@@ -146,6 +146,7 @@ public class PnShowEach extends javax.swing.JPanel {
         lbTittle.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         lbTittle.setText("HỒ SƠ SINH VIÊN");
 
+        tbInfo.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         tbInfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"Họ và tên", null},
@@ -180,6 +181,7 @@ public class PnShowEach extends javax.swing.JPanel {
             }
         });
 
+        btChange.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         btChange.setText("Chỉnh sửa");
         btChange.setEnabled(false);
         btChange.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -188,6 +190,7 @@ public class PnShowEach extends javax.swing.JPanel {
             }
         });
 
+        btShow.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         btShow.setText("Hiển thị");
         btShow.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -200,8 +203,10 @@ public class PnShowEach extends javax.swing.JPanel {
         thumb.setMinimumSize(new java.awt.Dimension(160, 240));
         thumb.setPreferredSize(new java.awt.Dimension(160, 240));
 
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jLabel1.setText("ID:");
 
+        btDelete.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         btDelete.setText("Xóa");
         btDelete.setEnabled(false);
         btDelete.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -413,7 +418,7 @@ public class PnShowEach extends javax.swing.JPanel {
                 }
                 System.out.println("Response code:" +  responseCode + "/nResponseBody:" + responseBody);
             }catch(ClientProtocolException e){
-                JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Oops!Some thing went wrong~~", "Error", JOptionPane.ERROR_MESSAGE);
             }finally{
                 httpclient.getConnectionManager().shutdown();
             }

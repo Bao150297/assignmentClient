@@ -77,13 +77,14 @@ public class PnCreateNew extends javax.swing.JPanel {
         lbFilePatch = new javax.swing.JLabel();
         btSubmit = new javax.swing.JButton();
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thêm mới hồ sơ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Thêm mới hồ sơ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 14))); // NOI18N
         setMaximumSize(new java.awt.Dimension(700, 600));
         setMinimumSize(new java.awt.Dimension(700, 600));
 
         lbTittle.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         lbTittle.setText("THÔNG TIN SINH VIÊN");
 
+        tbInfo.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         tbInfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"Họ và tên", null},
@@ -110,6 +111,7 @@ public class PnCreateNew extends javax.swing.JPanel {
             tbInfo.getColumnModel().getColumn(1).setPreferredWidth(200);
         }
 
+        btBack.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btBack.setText("<html>Back ↵");
         btBack.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -122,6 +124,7 @@ public class PnCreateNew extends javax.swing.JPanel {
         thumb.setMinimumSize(new java.awt.Dimension(160, 240));
         thumb.setPreferredSize(new java.awt.Dimension(160, 240));
 
+        btChooseImage.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         btChooseImage.setText("Tải ảnh");
         btChooseImage.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -129,10 +132,13 @@ public class PnCreateNew extends javax.swing.JPanel {
             }
         });
 
+        rbOne.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         rbOne.setText("Nhập thủ công");
 
+        rbFile.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         rbFile.setText("Nhập dữ liệu từ file excel");
 
+        btChooseFile.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         btChooseFile.setText("Chọn File");
         btChooseFile.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -140,6 +146,7 @@ public class PnCreateNew extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jLabel1.setText("File patch:");
 
         btSubmit.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -188,7 +195,7 @@ public class PnCreateNew extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(rbOne)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(lbTittle)

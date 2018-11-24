@@ -15,16 +15,16 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
@@ -106,23 +106,38 @@ public class PnAnnouncement extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         txtTitle = new javax.swing.JTextField();
         btSubmit = new javax.swing.JButton();
+        btBack = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tạo thông báo mới", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 14))); // NOI18N
         setMaximumSize(new java.awt.Dimension(700, 600));
         setMinimumSize(new java.awt.Dimension(700, 600));
 
         txtContent.setColumns(20);
+        txtContent.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         txtContent.setRows(5);
         jScrollPane1.setViewportView(txtContent);
 
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel1.setText("Nội dung thông báo");
 
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel2.setText("Tiêu đề");
 
+        txtTitle.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+
+        btSubmit.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btSubmit.setForeground(new java.awt.Color(204, 0, 0));
         btSubmit.setText("Hoàn tất");
         btSubmit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btSubmitMouseClicked(evt);
+            }
+        });
+
+        btBack.setText("<html>Back ↵");
+        btBack.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btBackMouseClicked(evt);
             }
         });
 
@@ -133,18 +148,19 @@ public class PnAnnouncement extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(txtTitle))
+                    .addComponent(txtTitle)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btBack, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(469, Short.MAX_VALUE)
-                .addComponent(btSubmit)
-                .addGap(144, 144, 144))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,8 +173,10 @@ public class PnAnnouncement extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                .addComponent(btSubmit)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btSubmit))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -178,9 +196,36 @@ public class PnAnnouncement extends javax.swing.JPanel {
             return;
         }
     }//GEN-LAST:event_btSubmitMouseClicked
+    private JPanel pnAnnouncement;
+    /**
+     * Xác định panel sẽ hiển thị khi quay lại trang home
+     * @param pnAnnouncement
+     */
+    public void PnBacktoMain(JPanel pnAnnouncement){
+        this.pnAnnouncement = pnAnnouncement;
+    }; 
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    private void btBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btBackMouseClicked
+        JFrame parent = Utitilities.findJFrameOf(this);
+        if (parent != null) {
+            txtTitle.setText("");
+            txtContent.setText("");
+            parent.setContentPane(pnAnnouncement);
+            parent.pack();
+        } else {
+            JOptionPane.showMessageDialog(parent, "Panel Login only used for JFrame");
+            System.exit(1);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btBackMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btBack;
     private javax.swing.JButton btSubmit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

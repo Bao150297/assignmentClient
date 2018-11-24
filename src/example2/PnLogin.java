@@ -11,7 +11,10 @@ import javax.swing.JPanel;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -30,6 +33,7 @@ import javax.swing.ImageIcon;
 public class PnLogin extends javax.swing.JPanel {
     String workingDir = System.getProperty("user.dir");
     private final String USER_AGENT = "Mozilla/5.0";
+    File userInfo = new File(workingDir + "/temp/userInfo.txt");
     /**
      * Creates new form PnLogin
      */
@@ -57,12 +61,55 @@ public class PnLogin extends javax.swing.JPanel {
     public void setPnLoginSuccess(JPanel pnLoginSuccess){
         this.pnLoginSuccess = pnLoginSuccess;
     };
-    private int sendPost() throws Exception {
-        if(txtID.getText().equals("") || txtPW.getPassword().length == 0){
-            return 0;
+    
+    private JPanel pnLoginSuccess2;
+
+    /**
+     * Xác định panel sẽ hiển thị khi đăng nhập thành công
+     * @param pnLoginSuccess2
+     */
+    public void setPnLoginSuccess2(JPanel pnLoginSuccess2){
+        this.pnLoginSuccess2 = pnLoginSuccess2;
+    };
+    
+    private String getInfo() throws FileNotFoundException, IOException{
+        BufferedReader br = new BufferedReader(new FileReader(userInfo));   
+        String st = "";  
+        st = br.readLine();
+        String[] arr = st.split("/");
+        br.close();
+        return arr[2];
+    }
+    
+    private void selectForm() throws IOException{
+        String result = getInfo();
+        JFrame parent = Utitilities.findJFrameOf(this);
+        if("student".equals(result)){
+            if (parent != null) {
+                parent.setContentPane(pnLoginSuccess2);
+                parent.pack();
+            } else {
+                JOptionPane.showMessageDialog(parent, "Panel Login only used for JFrame");
+                System.exit(1);
+            }
+        }else if("user".equals(result)){
+            if (parent != null) {
+                parent.setContentPane(pnLoginSuccess);
+                parent.pack();
+            } else {
+                JOptionPane.showMessageDialog(parent, "Panel Login only used for JFrame");
+                System.exit(1);
+            }
+        }else{
+            return;
         }
-        
-        PnLogin http = new PnLogin();
+    }   
+    
+    private void loginRequest() throws Exception {
+        if(txtID.getText().equals("") || txtPW.getPassword().length == 0){
+            JOptionPane.showMessageDialog(null, "Nhập thiếu thông tin!", "Lỗi đăng nhập", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         
         String url = "http://localhost:3000/auth/login";
         URL obj = new URL(url);
@@ -89,7 +136,7 @@ public class PnLogin extends javax.swing.JPanel {
 
         con.connect();
         int responseCode = con.getResponseCode();
-        System.out.println("\nSending 'POST' request to URL : " /*+ url*/);
+        System.out.println("\nSending 'POST' request to URL : ");
         System.out.println("Post parameters : " + urlParameters);
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
@@ -101,13 +148,14 @@ public class PnLogin extends javax.swing.JPanel {
         }
         in.close();
         System.out.println("Response Code : " + responseCode + "Reponse data : "+ response.toString());
-
+        if(responseCode == 200){
+            FileWriter f1 = new FileWriter(userInfo, false);
+            f1.write(response.toString());
+            f1.close();
+            selectForm();
+        }
         //print result
-        File userInfo = new File(workingDir + "/temp/userInfo.txt");
-        FileWriter f1 = new FileWriter(userInfo, false);
-        f1.write(response.toString());
-        f1.close();
-        return responseCode;
+ 
     }
 
     /**
@@ -131,9 +179,10 @@ public class PnLogin extends javax.swing.JPanel {
         lbNodeJS = new javax.swing.JLabel();
         lbMDB = new javax.swing.JLabel();
         lbJava = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Đăng nhập", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Đăng nhập", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 14))); // NOI18N
         setMaximumSize(new java.awt.Dimension(700, 600));
         setMinimumSize(new java.awt.Dimension(700, 600));
         setName(""); // NOI18N
@@ -174,6 +223,10 @@ public class PnLogin extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 26)); // NOI18N
         jLabel3.setText("sinh viên kí túc xá");
 
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel1.setText("(hoặc số CMND)");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -189,7 +242,7 @@ public class PnLogin extends javax.swing.JPanel {
                 .addComponent(lbNodeJS, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(127, Short.MAX_VALUE)
+                .addContainerGap(149, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel2)
@@ -198,8 +251,10 @@ public class PnLogin extends javax.swing.JPanel {
                         .addGap(128, 128, 128))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(lbIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(253, 253, 253))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(253, 253, 253))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblPassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -207,9 +262,13 @@ public class PnLogin extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtID)
                             .addComponent(txtPW, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(35, 35, 35)
-                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(103, 103, 103))))
+                        .addGap(35, 35, 35))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(101, 101, 101)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(103, 103, 103))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,61 +282,52 @@ public class PnLogin extends javax.swing.JPanel {
                 .addGap(75, 75, 75)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbSO, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbMDB, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbNodeJS, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap())
+                            .addComponent(lbJava, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblUsername)
                             .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblPassword)
-                            .addComponent(txtPW, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbSO, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbMDB, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbNodeJS, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())
-                    .addComponent(lbJava, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtPW, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
     }// </editor-fold>//GEN-END:initComponents
     
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         JFrame parent = Utitilities.findJFrameOf(this);
-        /*if (parent != null) {
-                    parent.setContentPane(pnLoginSuccess);
-                    parent.pack();
-                } else {
-                    JOptionPane.showMessageDialog(parent, "Panel Login only used for JFrame");
-                    System.exit(1);
-                };
-        */try {
-            if(sendPost() == 200){
-                if (parent != null) {
-                    parent.setContentPane(pnLoginSuccess);
-                    parent.pack();
-                } else {
-                    JOptionPane.showMessageDialog(parent, "Panel Login only used for JFrame");
-                    System.exit(1);
-                }
-            }else if(sendPost() == 0){
-                JOptionPane.showMessageDialog(null, "Nhập thiếu thông tin!", "Lỗi đăng nhập", JOptionPane.INFORMATION_MESSAGE);
-            }
-            else {
-                JOptionPane.showMessageDialog(parent,"Oops! Something wrent wrong~~",
-                        "Lỗi đăng nhập!",JOptionPane.INFORMATION_MESSAGE);
-                txtPW.setText("");
-            }
+        try {
+            /*if (parent != null) {
+            parent.setContentPane(pnLoginSuccess);
+            parent.pack();
+            } else {
+            JOptionPane.showMessageDialog(parent, "Panel Login only used for JFrame");
+            System.exit(1);
+            };
+            */
+            loginRequest();
         } catch (Exception ex) {
-                JOptionPane.showMessageDialog(parent,"Tài khoản hoặc mật khẩu sai!",
-                        "Lỗi đăng nhập!",JOptionPane.INFORMATION_MESSAGE);
-                txtPW.setText("");
+            JOptionPane.showMessageDialog(parent,"Tài khoản hoặc mật khẩu sai!",
+                    "Lỗi đăng nhập!",JOptionPane.INFORMATION_MESSAGE);
+            txtPW.setText("");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel lbIcon;

@@ -31,6 +31,7 @@ public class Main extends javax.swing.JFrame {
     private PnCreateNew pnCreateNew;
     private PnUserInfo pnUserInfo;
     private PnAnnouncement pnAnnouncement;
+    private PnStudentHome pnStudentHome;
     String workingDir = System.getProperty("user.dir");
     File userInfo = new File(workingDir + "/temp/userInfo.txt");
     /**
@@ -77,9 +78,11 @@ public class Main extends javax.swing.JFrame {
         pnCreateNew = new PnCreateNew();
         pnUserInfo = new PnUserInfo();
         pnAnnouncement = new PnAnnouncement();
+        pnStudentHome = new PnStudentHome();
         //Xác định navigation
         //Sau khi đăng nhập thành công sẽ chuyển sang giao diện của PnHome
         pnLogin.setPnLoginSuccess(pnHome);
+        pnLogin.setPnLoginSuccess2(pnStudentHome);
         pnHome.setPnHomeIndex1(pnShowEach);
         pnHome.setPnHomeIndex2(pnCreateNew);
         pnHome.setPnHomeIndex3(pnUserInfo);
@@ -87,6 +90,7 @@ public class Main extends javax.swing.JFrame {
         pnUserInfo.PnBacktoMain(pnHome);
         pnShowEach.PnBacktoMain(pnHome);
         pnCreateNew.PnBacktoMain(pnHome);
+        pnAnnouncement.PnBacktoMain(pnHome);
     }
 
     /**
