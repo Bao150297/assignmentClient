@@ -6,6 +6,8 @@
 package example2;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -14,6 +16,7 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -22,7 +25,7 @@ import javax.swing.JPanel;
  * @author noobf
  */
 public class PnStudentHome extends javax.swing.JPanel {
-
+    String workingDir = System.getProperty("user.dir");
     /**
      * Creates new form PnStudentHome
      */
@@ -121,14 +124,39 @@ public class PnStudentHome extends javax.swing.JPanel {
         jLabel10.setText("");
 
         new1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        new1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                new1MouseClicked(evt);
+            }
+        });
 
         new2.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        new2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                new2MouseClicked(evt);
+            }
+        });
 
         new4.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        new4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                new4MouseClicked(evt);
+            }
+        });
 
         new5.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        new5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                new5MouseClicked(evt);
+            }
+        });
 
         new3.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        new3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                new3MouseClicked(evt);
+            }
+        });
 
         jLabel16.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(204, 0, 0));
@@ -279,6 +307,82 @@ public class PnStudentHome extends javax.swing.JPanel {
             System.exit(1);
         }
     }//GEN-LAST:event_btRRMouseClicked
+    
+    private void writeContent(int num, StringBuffer value){
+        String[] result = value.toString().split("/");
+        String content = null;
+        String content2 = null;
+        if(num == 1){
+            content = result[0];
+            content2 = new1.getText();
+        }else if(num == 2){
+            content = result[2];
+            content2 = new2.getText();
+        }else if(num == 3){
+            content = result[4];
+            content2 = new3.getText();
+        }else if(num == 4){
+            content = result[6];
+            content2 = new4.getText();
+        }else if(num == 5){
+            content = result[8];
+            content2 = new5.getText();
+        }
+        System.out.println(content + "--" + content2);
+        File file = new File(workingDir + "/temp/info.txt");
+        try {
+        FileWriter f2 = new FileWriter(file, false);
+            f2.write(content + "/" + content2);
+            f2.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }        
+    }
+    
+    private void new1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_new1MouseClicked
+        try {
+            // TODO add your handling code here:
+            writeContent(1, recieveAnnoucement());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Oops!Some thing went wrong~~", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_new1MouseClicked
+
+    private void new2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_new2MouseClicked
+        try {
+            // TODO add your handling code here:
+            writeContent(2, recieveAnnoucement());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Oops!Some thing went wrong~~", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_new2MouseClicked
+
+    private void new3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_new3MouseClicked
+        try {
+            // TODO add your handling code here:
+            writeContent(3, recieveAnnoucement());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Oops!Some thing went wrong~~", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_new3MouseClicked
+
+    private void new4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_new4MouseClicked
+        try {
+            // TODO add your handling code here:
+            writeContent(4, recieveAnnoucement());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Oops!Some thing went wrong~~", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_new4MouseClicked
+
+    private void new5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_new5MouseClicked
+        try {
+            // TODO add your handling code here:
+            writeContent(5, recieveAnnoucement());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Oops!Some thing went wrong~~", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_new5MouseClicked
     private StringBuffer recieveAnnoucement() throws MalformedURLException, IOException{
         String url = "http://localhost:3000/api/announce";
 		URL obj = new URL(url);

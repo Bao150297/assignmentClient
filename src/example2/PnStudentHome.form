@@ -302,6 +302,9 @@
           <Font name="Times New Roman" size="12" style="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="new1MouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="new2">
       <Properties>
@@ -309,6 +312,9 @@
           <Font name="Times New Roman" size="12" style="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="new2MouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="new4">
       <Properties>
@@ -316,6 +322,9 @@
           <Font name="Times New Roman" size="12" style="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="new4MouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="new5">
       <Properties>
@@ -323,6 +332,9 @@
           <Font name="Times New Roman" size="12" style="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="new5MouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="new3">
       <Properties>
@@ -330,6 +342,9 @@
           <Font name="Times New Roman" size="12" style="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="new3MouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel16">
       <Properties>

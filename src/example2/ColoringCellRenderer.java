@@ -48,7 +48,6 @@ public class ColoringCellRenderer extends DefaultTableCellRenderer{
     public Component getTableCellRendererComponent(JTable table, Object value,
         boolean isSelected, boolean hasFocus, int row, int column)
     {
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         super.getTableCellRendererComponent(
             table, value, isSelected, hasFocus, row, column);
         Color color = getCellColor(row, column);

@@ -89,6 +89,7 @@ public class Main extends javax.swing.JFrame {
         pnShowEach.PnBacktoMain(pnHome);
         pnCreateNew.PnBacktoMain(pnHome);
         pnAnnouncement.PnBacktoMain(pnHome);
+        pnRoomRegistration.PnBacktoMain(pnStudentHome);
         pnStudentHome.PnGoToRR(pnRoomRegistration);
     }
 
