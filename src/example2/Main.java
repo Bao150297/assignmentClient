@@ -4,17 +4,13 @@
  */
 package example2;
 
-import java.awt.Frame;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.JFrame;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 import org.apache.commons.io.FileUtils;
 
@@ -32,12 +28,13 @@ public class Main extends javax.swing.JFrame {
     private PnUserInfo pnUserInfo;
     private PnAnnouncement pnAnnouncement;
     private PnStudentHome pnStudentHome;
+    private RoomRegistration pnRoomRegistration; 
     String workingDir = System.getProperty("user.dir");
     File userInfo = new File(workingDir + "/temp/userInfo.txt");
     /**
      * Creates new form Main
      */
-    public Main() throws IOException {
+    public Main() throws IOException, Exception {
       
         initComponents();
 
@@ -71,7 +68,7 @@ public class Main extends javax.swing.JFrame {
         });      
     }
 
-    private void initPanels() throws IOException {
+    private void initPanels() throws IOException, Exception {
         pnLogin = new PnLogin();
         pnHome = new PnHome();
         pnShowEach = new PnShowEach();
@@ -79,6 +76,7 @@ public class Main extends javax.swing.JFrame {
         pnUserInfo = new PnUserInfo();
         pnAnnouncement = new PnAnnouncement();
         pnStudentHome = new PnStudentHome();
+        pnRoomRegistration = new RoomRegistration();
         //Xác định navigation
         //Sau khi đăng nhập thành công sẽ chuyển sang giao diện của PnHome
         pnLogin.setPnLoginSuccess(pnHome);
@@ -91,6 +89,7 @@ public class Main extends javax.swing.JFrame {
         pnShowEach.PnBacktoMain(pnHome);
         pnCreateNew.PnBacktoMain(pnHome);
         pnAnnouncement.PnBacktoMain(pnHome);
+        pnStudentHome.PnGoToRR(pnRoomRegistration);
     }
 
     /**
@@ -150,6 +149,8 @@ public class Main extends javax.swing.JFrame {
                 try {
                     new Main().setVisible(true);
                 } catch (IOException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

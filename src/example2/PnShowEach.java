@@ -137,6 +137,7 @@ public class PnShowEach extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         lbmaSV = new javax.swing.JLabel();
         btDelete = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Quản lý thông tin cá nhân", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 14))); // NOI18N
         setMaximumSize(new java.awt.Dimension(700, 600));
@@ -215,6 +216,9 @@ public class PnShowEach extends javax.swing.JPanel {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Font Awesome 5 Free Solid", 0, 18)); // NOI18N
+        jLabel2.setText("");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -223,16 +227,11 @@ public class PnShowEach extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(231, 231, 231)
-                                .addComponent(lbTittle))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lbmaSV)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbmaSV)
+                        .addGap(0, 618, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(thumb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
@@ -243,7 +242,12 @@ public class PnShowEach extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addComponent(btChange, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(btDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(38, 38, 38)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lbTittle))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btBack, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -256,9 +260,11 @@ public class PnShowEach extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(lbmaSV))
-                .addGap(87, 87, 87)
-                .addComponent(lbTittle)
-                .addGap(26, 26, 26)
+                .addGap(95, 95, 95)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbTittle)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -268,7 +274,7 @@ public class PnShowEach extends javax.swing.JPanel {
                     .addComponent(btChange)
                     .addComponent(btShow)
                     .addComponent(btDelete))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                 .addComponent(btBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -381,7 +387,7 @@ public class PnShowEach extends javax.swing.JPanel {
         return arr;
     }
     
-    private void sendPut() throws UnsupportedEncodingException, MalformedURLException, IOException{
+    private void sendPut() throws IOException{
         int select = JOptionPane.showConfirmDialog(null, "Bạn thực sự muốn sửa bản ghi?",
                 "Chú ý", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if(select == JOptionPane.NO_OPTION){
@@ -391,7 +397,7 @@ public class PnShowEach extends javax.swing.JPanel {
             int i = 0;
             for(; i < 10; i++){
                 if(arr[i] == null) return;
-            };
+            }
             String maSV = lbmaSV.getText();
             HttpClient httpclient = new DefaultHttpClient();
             HttpPut httpput = new HttpPut("http://localhost:3000/api/put/" + maSV);
@@ -401,7 +407,7 @@ public class PnShowEach extends javax.swing.JPanel {
             List <NameValuePair> nvps = new ArrayList <NameValuePair>();
             for(; i < 10; i++){
                 nvps.add(new BasicNameValuePair(nameBody[i], arr[i]));
-            };
+            }
             try{
                 httpput.setHeader("Accept", "application/x-www-form-urlencoded");
                 httpput.setHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -429,10 +435,8 @@ public class PnShowEach extends javax.swing.JPanel {
         try {
             sendPut();
             // TODO add your handling code here:
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(PnShowEach.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(PnShowEach.class.getName()).log(Level.SEVERE, null, ex);
+        }catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Oops!Some thing went wrong~~", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btChangeMouseClicked
 
@@ -443,6 +447,7 @@ public class PnShowEach extends javax.swing.JPanel {
     private javax.swing.JButton btDelete;
     private javax.swing.JButton btShow;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbTittle;
     private javax.swing.JLabel lbmaSV;

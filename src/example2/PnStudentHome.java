@@ -13,7 +13,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -65,9 +67,8 @@ public class PnStudentHome extends javax.swing.JPanel {
         new4 = new javax.swing.JLabel();
         new5 = new javax.swing.JLabel();
         new3 = new javax.swing.JLabel();
-        btShow = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
+        btRR = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
 
@@ -82,7 +83,7 @@ public class PnStudentHome extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(204, 0, 0));
-        jLabel2.setText("Bảng tin");
+        jLabel2.setText("BẢNG TIN\n");
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
@@ -129,26 +130,23 @@ public class PnStudentHome extends javax.swing.JPanel {
 
         new3.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
 
-        btShow.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        btShow.setText("Hiển thị");
-        btShow.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btShowMouseClicked(evt);
-            }
-        });
-
         jLabel16.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(204, 0, 0));
         jLabel16.setText("Danh mục chính");
 
-        jButton6.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jButton6.setText("Đăng kí phòng");
+        btRR.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btRR.setText("<html>&#9998; Đăng kí phòng");
+        btRR.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btRRMouseClicked(evt);
+            }
+        });
 
-        jButton7.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jButton7.setText("Quản lý sinh hoạt phí");
+        jButton7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jButton7.setText("<html>&#9998; Quản lý sinh hoạt phí");
 
-        jButton8.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jButton8.setText("Gửi phản hồi");
+        jButton8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jButton8.setText("<html>&#9998; Gửi phản hồi");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -163,12 +161,13 @@ public class PnStudentHome extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel16))
-                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btRR)
+                            .addComponent(jButton7)
+                            .addComponent(jButton8))
                         .addGap(18, 18, Short.MAX_VALUE)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -198,12 +197,10 @@ public class PnStudentHome extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(new2, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(new1, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(btShow, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel5))))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel5)))))
                 .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
@@ -239,8 +236,6 @@ public class PnStudentHome extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(new5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(btShow)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -256,7 +251,7 @@ public class PnStudentHome extends javax.swing.JPanel {
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btRR, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -265,6 +260,25 @@ public class PnStudentHome extends javax.swing.JPanel {
                         .addContainerGap())))
         );
     }// </editor-fold>//GEN-END:initComponents
+    private JPanel pnStudentHome;
+    /**
+     * Xác định panel sẽ hiển thị khi quay lại trang home
+     * @param pnStudentHome
+     */
+    public void PnGoToRR(JPanel pnStudentHome){
+        this.pnStudentHome = pnStudentHome;
+    }; 
+    private void btRRMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btRRMouseClicked
+        // TODO add your handling code here:
+        JFrame parent = Utitilities.findJFrameOf(this);
+        if (parent != null) {
+            parent.setContentPane(pnStudentHome);
+            parent.pack();
+        } else {
+            JOptionPane.showMessageDialog(parent, "Panel Login only used for JFrame");
+            System.exit(1);
+        }
+    }//GEN-LAST:event_btRRMouseClicked
     private StringBuffer recieveAnnoucement() throws MalformedURLException, IOException{
         String url = "http://localhost:3000/api/announce";
 		URL obj = new URL(url);
@@ -287,23 +301,9 @@ public class PnStudentHome extends javax.swing.JPanel {
         return response;
     }
     
-    private void btShowMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btShowMouseClicked
-        try {
-            // TODO add your handling code here:
-            addComponent(recieveAnnoucement());
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Oops!Some thing went wrong~~", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Oops!Some thing went wrong~~", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_btShowMouseClicked
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btShow;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton btRR;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;

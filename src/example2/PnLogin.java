@@ -21,6 +21,7 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 import java.io.OutputStream;
 import java.lang.Object;
+import java.net.MalformedURLException;
 import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +33,6 @@ import javax.swing.ImageIcon;
  */
 public class PnLogin extends javax.swing.JPanel {
     String workingDir = System.getProperty("user.dir");
-    private final String USER_AGENT = "Mozilla/5.0";
     File userInfo = new File(workingDir + "/temp/userInfo.txt");
     /**
      * Creates new form PnLogin
@@ -105,20 +105,23 @@ public class PnLogin extends javax.swing.JPanel {
         }
     }   
     
-    private void loginRequest() throws Exception {
+    private void loginRequest(){
         if(txtID.getText().equals("") || txtPW.getPassword().length == 0){
             JOptionPane.showMessageDialog(null, "Nhập thiếu thông tin!", "Lỗi đăng nhập", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        
+        HttpURLConnection con = null;
+        try{
         String url = "http://localhost:3000/auth/login";
         URL obj = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
+        con = (HttpURLConnection) obj.openConnection();
+     
         //add reuqest header
         con.setRequestMethod("POST");
-        con.setRequestProperty("User-Agent", USER_AGENT);
-        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+        con.setRequestProperty("Content-Type", 
+                   "application/x-www-form-urlencoded");
+        con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                + "(KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36");
 
         String user = txtID.getText();
         String pass = new String(txtPW.getPassword());
@@ -133,26 +136,34 @@ public class PnLogin extends javax.swing.JPanel {
         wr.writeBytes(urlParameters);
         wr.flush();
         wr.close();
-
+        
         con.connect();
         int responseCode = con.getResponseCode();
         System.out.println("\nSending 'POST' request to URL : ");
-        System.out.println("Post parameters : " + urlParameters);
         BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuffer response = new StringBuffer();
+            new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
 
-        while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-        }
-        in.close();
-        System.out.println("Response Code : " + responseCode + "Reponse data : "+ response.toString());
-        if(responseCode == 200){
-            FileWriter f1 = new FileWriter(userInfo, false);
-            f1.write(response.toString());
-            f1.close();
-            selectForm();
+            while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+            }
+            in.close();
+            System.out.println("Response Code : " + responseCode + "Reponse data : "+ response.toString()); 
+            if(responseCode == 200){
+                FileWriter f1 = new FileWriter(userInfo, false);
+                f1.write(response.toString());
+                f1.close();
+                selectForm();
+            }
+        }catch(Exception e){
+               JOptionPane.showMessageDialog(null,"Thông tin đăng nhập sai!",
+                    "Lỗi đăng nhập!",JOptionPane.INFORMATION_MESSAGE);
+                txtPW.setText("");
+        }finally{
+            if(con != null) {
+            con.disconnect(); 
+          }
         }
         //print result
  
@@ -308,21 +319,7 @@ public class PnLogin extends javax.swing.JPanel {
     
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         JFrame parent = Utitilities.findJFrameOf(this);
-        try {
-            /*if (parent != null) {
-            parent.setContentPane(pnLoginSuccess);
-            parent.pack();
-            } else {
-            JOptionPane.showMessageDialog(parent, "Panel Login only used for JFrame");
-            System.exit(1);
-            };
-            */
-            loginRequest();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(parent,"Tài khoản hoặc mật khẩu sai!",
-                    "Lỗi đăng nhập!",JOptionPane.INFORMATION_MESSAGE);
-            txtPW.setText("");
-        }
+        loginRequest();
     }//GEN-LAST:event_btnLoginActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
