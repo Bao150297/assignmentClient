@@ -43,8 +43,6 @@ public class Main extends javax.swing.JFrame {
 
         //Khởi tạo các Panel của ứng dụng
         initPanels();
-        //Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        //this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         //Set icon cho ứng dụng 
         ImageIcon img = new ImageIcon(workingDir + "/icon/jframe_icon.jpg");
         this.setIconImage(img.getImage());
