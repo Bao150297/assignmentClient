@@ -4,6 +4,8 @@
  */
 package example2;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +35,7 @@ public class Main extends javax.swing.JFrame {
     File userInfo = new File(workingDir + "/temp/userInfo.txt");
     /**
      * Creates new form Main
+     * @throws java.io.IOException
      */
     public Main() throws IOException, Exception {
       
@@ -40,7 +43,8 @@ public class Main extends javax.swing.JFrame {
 
         //Khởi tạo các Panel của ứng dụng
         initPanels();
-        
+        //Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        //this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         //Set icon cho ứng dụng 
         ImageIcon img = new ImageIcon(workingDir + "/icon/jframe_icon.jpg");
         this.setIconImage(img.getImage());
@@ -48,6 +52,8 @@ public class Main extends javax.swing.JFrame {
         //Xây dựng giao diện ban đầu cho ứng dụng
         setContentPane(pnLogin);
         pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
